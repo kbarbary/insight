@@ -297,7 +297,7 @@ class Sessions(object):
             self._max_length = length
 
     def summary_statistics(self):
-        """Write statistics to the open file `out_file`."""
+        """Return (number, average_length, maximum_length)."""
         self._clear_all()
         return (self._nsessions,
                 self._total_length / self._nsessions,
