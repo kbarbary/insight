@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 import codecs  # use explicit codec decodes to support utf-8 on Python 2
 from collections import Counter, deque
 from datetime import datetime, timedelta
+from operator import itemgetter
 import re
 from time import time as clock
 
@@ -393,13 +394,17 @@ def main(argv=None):
         top_hours[hour_start] = n
 
     # Output host requests.
+    host_requests_tuples = sorted(host_requests.items(), key=itemgetter(0))
+    host_requests_tuples.sort(key=itemgetter(1), reverse=True)
     with codecs.open(args.hosts, 'w', encoding='utf-8') as host_file:
-        for host, count in host_requests.most_common(10):
+        for host, count in host_requests_tuples[0:10]:
             host_file.write("{:s},{:d}\n".format(host, count))
 
     # Output resource requests.
+    resource_bytes_tuples = sorted(resource_bytes.items(), key=itemgetter(0))
+    resource_bytes_tuples.sort(key=itemgetter(1), reverse=True)
     with codecs.open(args.resources, 'w', encoding='utf-8') as resource_file:
-        for name, _ in resource_bytes.most_common(10):
+        for name, _ in resource_bytes_tuples[0:10]:
             resource_file.write("{:s}\n".format(name))
 
     # Output top hours.

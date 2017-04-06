@@ -1,9 +1,10 @@
-# fansite-analytics-challenge
+# insight-analytics-challenge
 
 *Coding exercise for Insight*
 
 I implemented my solution in pure Python. It requires either
-Python 2.7 or 3.5+, and has no dependencies outside the Python standard library.
+Python 2.7 or 3.5+, and has no dependencies outside the Python standard
+library.
 
 There are unit tests in `src/test_process_log.py`. The tests run with pytest:
 ```
@@ -13,11 +14,12 @@ pytest src/test_process_log.py
 # Solution Overview and Data Structures
 
 For features 1 and 2 ("top hosts" and "top resources"), I use
-the `Counter` class (a.k.a. "multiset")  from the Python standard library.
+the `Counter` class (a.k.a. a "multiset")  from the Python standard library.
+This is simply a dictionary that keeps track of counts.
 
 For feature 3, "busiest hours", I use a combination of a deque and a custom
 class `TopKDict`. The deque is used to store only the timestamps occuring in
-the past hour. The custom class is a dictionary that only stores the top K
+the past hour. The `TopKDict` class is a dictionary that only stores the top K
 entries, sorted by value. As each timestamp "expires", the current length
 of the deque is added to the dictionary.
 
@@ -36,13 +38,15 @@ pass, I calculate the average length of each "session".  Here, I'm
 defining a session as a group of requests from a host with no gaps
 of 30 minutes or more.
 
-This is done in the class `Sessions`. It keeps track of active session start
-and end times for each host in a dictionary. To reduce the memory footprint,
-I occasionally go through the list of active hosts and clear ones that are
-no longer active. (Otherwise "current" activity is only checked once a new
-request from the host comes in, which means the dictionary includes every host
-ever to make a request.) I also tried using a deque in combination with the
-dictionary to track "expiring" sessions, but this ended up being slower.
+This is done in the class `Sessions`. It keeps track of active session
+start and end times for each host in a dictionary. To reduce the
+memory footprint, I occasionally go through the dictionary of active
+hosts and clear ones that are no longer active. (Otherwise "current"
+activity is only checked once a new request from the host comes in,
+which means the dictionary includes every host ever to make a
+request.) I also tried using a deque in combination with the
+dictionary to track "expiring" sessions, but this ended up being
+slower.
 
 
 # Performance
