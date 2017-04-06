@@ -1,7 +1,14 @@
 # fansite-analytics-challenge
 
+*Coding exercise for Insight*
+
 I implemented my solution in pure Python. It requires either
-Python 2.7 or 3.5+, and has no external dependencies.
+Python 2.7 or 3.5+, and has no dependencies outside the Python standard library.
+
+There are unit tests in `src/test_process_log.py`. The tests run with pytest:
+```
+pytest src/test_process_log.py
+```
 
 # Solution Overview and Data Structures
 
@@ -19,6 +26,7 @@ each login request. Internally, it keeps track of hosts that are currently
 blocked and recent failed login times for hosts. These are both dictionaries
 mapping hosts to time(s).
 
+
 # Additional Feature: session statistics
 
 It is often useful to have statistics about how long users spend on
@@ -34,7 +42,7 @@ I occasionally go through the list of active hosts and clear ones that are
 no longer active. (Otherwise "current" activity is only checked once a new
 request from the host comes in, which means the dictionary includes every host
 ever to make a request.) I also tried using a deque in combination with the
-dictionary to track expiring sessions, but this ended up being slower.
+dictionary to track "expiring" sessions, but this ended up being slower.
 
 
 # Performance

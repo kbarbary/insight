@@ -1,0 +1,10 @@
+163.205.53.14,7
+199.0.2.27,6
+maynard.isi.uconn.edu,4
+128.159.122.45,3
+slipper12055.iaccess.za,3
+gk-east.usps.gov,3
+tty13.maze.ppp.uab.edu,2
+alyssa.prodigy.com,2
+128.159.77.122,2
+139.169.210.47,2

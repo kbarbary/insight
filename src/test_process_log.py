@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
-from process_log import parse_timestamp, parse_line, TopKDict, BlockList
+from process_log import parse_timestamp, parse_line, TopKDict, BlockList, Sessions
 
 
 def test_parse_timestamp():
@@ -55,6 +55,7 @@ def test_blocklist():
     assert blocklist.handle('a', datetime(1995, 7, 1, 0, 0, 0), False) == False
     assert blocklist.handle('b', datetime(1995, 7, 1, 0, 0, 0), False) == False
     assert blocklist.handle('c', datetime(1995, 7, 1, 0, 0, 0), False) == False
+
     # a succeeds 5 seconds later and should be reset, subsequent login
     # not blocked
     assert blocklist.handle('a', datetime(1995, 7, 1, 0, 0, 5), True) == False
@@ -68,4 +69,26 @@ def test_blocklist():
     # unblocked now
     assert blocklist.handle('b', datetime(1995, 7, 1, 0, 1, 10), False) == False
 
+    # success, two more failures, then blocked again
+    assert blocklist.handle('b', datetime(1995, 7, 1, 0, 1, 11), True) == False
+    assert blocklist.handle('b', datetime(1995, 7, 1, 0, 1, 12), False) == False
+    assert blocklist.handle('b', datetime(1995, 7, 1, 0, 1, 13), False) == False
+    assert blocklist.handle('b', datetime(1995, 7, 1, 0, 1, 13), True) == True
 
+
+def test_sessions():
+    s = Sessions(inactive_limit=10.)
+
+    s.log('a', datetime(1995, 7, 1, 0, 0, 0))  # a first session
+    s.log('a', datetime(1995, 7, 1, 0, 0, 1))
+    s.log('b', datetime(1995, 7, 1, 0, 0, 2))   # b session: length=0
+    s.log('a', datetime(1995, 7, 1, 0, 0, 10))  # a first session: length=10
+    s.log('c', datetime(1995, 7, 1, 0, 0, 21))
+    s.log('a', datetime(1995, 7, 1, 0, 0, 22))
+    s.log('c', datetime(1995, 7, 1, 0, 0, 25))  # c session: length=4
+    s.log('a', datetime(1995, 7, 1, 0, 0, 28))  # a second session: length=6
+
+    n, avg, maxlen = s.summary_statistics()
+    assert n == 4
+    assert avg == 5.0
+    assert maxlen == 10.0

@@ -1,0 +1,3 @@
+total sessions: 75
+average session: 1.1
+maximum session: 19.0

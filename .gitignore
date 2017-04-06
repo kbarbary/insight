@@ -1,0 +1,5 @@
+.cache
+src/__pycache__
+*.pyc
+insight_testsuite/results.txt
+insight_testsuite/temp

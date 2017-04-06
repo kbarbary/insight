@@ -1,0 +1,10 @@
+/images/launch.gif
+/
+/shuttle/technology/images/srb_mod_compare_3-small.gif
+/history/apollo/apollo-11/images/69HC1119.GIF
+/shuttle/technology/sts-newsref/sts_egress.html
+/shuttle/technology/images/srb_mod_compare_1-small.gif
+/shuttle/missions/sts-70/movies/sts-70-launch-press.mpg
+/images/p263_100.jpg
+/shuttle/technology/images/sts_spec_6-small.gif
+/shuttle/resources/orbiters/columbia.gif

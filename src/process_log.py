@@ -295,14 +295,12 @@ class Sessions(object):
         if length > self._max_length:
             self._max_length = length
 
-    def write_statistics(self, out_file):
+    def summary_statistics(self):
         """Write statistics to the open file `out_file`."""
         self._clear_all()
-        n = self._nsessions
-        avg = self._total_length / self._nsessions
-        out_file.write("total sessions: {:d}\n".format(self._nsessions))
-        out_file.write("average session: {:.1f}\n".format(avg))
-        out_file.write("maximum session: {:.1f}\n".format(self._max_length))
+        return (self._nsessions,
+                self._total_length / self._nsessions,
+                self._max_length)
 
         
 def main(argv=None):
@@ -414,7 +412,10 @@ def main(argv=None):
 
     # Output session statistics
     with codecs.open(args.sessions, 'w', encoding='utf-8') as sessions_file:
-        sessions.write_statistics(sessions_file)
+        n, avg, maxlen = sessions.summary_statistics()
+        sessions_file.write("total sessions: {:d}\n".format(n))
+        sessions_file.write("average session: {:.1f}\n".format(avg))
+        sessions_file.write("maximum session: {:.1f}\n".format(maxlen))
 
 if __name__ == '__main__':
     main()
