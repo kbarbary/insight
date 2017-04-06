@@ -11,7 +11,7 @@ There are unit tests in `src/test_process_log.py`. The tests run with pytest:
 pytest src/test_process_log.py
 ```
 
-# Solution Overview and Data Structures
+## Solution Overview and Data Structures
 
 For features 1 and 2 ("top hosts" and "top resources"), I use
 the `Counter` class (a.k.a. a "multiset")  from the Python standard library.
@@ -29,7 +29,7 @@ blocked and recent failed login times for hosts. These are both dictionaries
 mapping hosts to time(s).
 
 
-# Additional Feature: session statistics
+## Additional Feature: session statistics
 
 It is often useful to have statistics about how long users spend on
 your site at any given time, how many pages they view, etc. There are
@@ -49,9 +49,9 @@ dictionary to track "expiring" sessions, but this ended up being
 slower.
 
 
-# Performance
+## Performance
 
-Before adding the session statistics, the code ran on the 426M input
+Before adding the session statistics, the code ran on the 426 MB input
 file in about a minute on my laptop:
 ```
 $ run.sh 
